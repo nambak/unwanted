@@ -11,6 +11,15 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+
+        <!-- Google AdSense Script -->
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-3760455502657641",
+                enable_page_level_ads: true
+            });
+        </script>
     </head>
     <body>
         <section id="app" class="section">
