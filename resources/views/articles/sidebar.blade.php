@@ -28,7 +28,7 @@
 <br />
 
 <div class="card">
-    <div class="card-header">태</div>
+    <div class="card-header">태그</div>
 
     <div class="card-body">
         <ul>

@@ -14,14 +14,14 @@
                         </p>
 
                         <p>
-                            <b>Author:</b> {{ $article->author->name }}
+                            <b>작성자:</b> {{ $article->author->name }}
                         </p>
                         <p>
-                            <b>Categories:</b>
+                            <b>카테고리:</b>
                             {!! $article->categories_links !!}
                         </p>
                         <p>
-                            <b>Tags:</b>
+                            <b>태그:</b>
                             {!! $article->tags_links !!}
                         </p>
 
