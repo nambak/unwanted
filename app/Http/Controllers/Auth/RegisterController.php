@@ -70,8 +70,8 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function  showRegistrationForm()
+    public function showRegistrationForm()
     {
-        return redirect($this->redirectTo);
+        return redirect('/');
     }
 }
