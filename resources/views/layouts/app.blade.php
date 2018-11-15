@@ -62,7 +62,7 @@
                                     <a href="{{ route('articles.create') }}" class="dropdown-item">
                                         글쓰기
                                     </a>
-                                    <a href="{{ route('categories.create') }}" class="dropdown-item">
+                                    <a href="{{ route('categories.index') }}" class="dropdown-item">
                                         카테고리 관리
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"

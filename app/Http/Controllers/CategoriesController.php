@@ -13,4 +13,13 @@ class CategoriesController extends Controller
 
         return view('categories.index', compact('categories'));
     }
+
+    public function create()
+    {
+        if (! auth()->check()) {
+            abort(401, 'Unauthorized');
+        }
+
+        return view('categories.create');
+    }
 }
