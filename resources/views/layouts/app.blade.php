@@ -60,7 +60,10 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a href="{{ route('articles.create') }}" class="dropdown-item">
-                                        글 쓰기
+                                        글쓰기
+                                    </a>
+                                    <a href="{{ route('categories.create') }}" class="dropdown-item">
+                                        카테고리 관리
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
