@@ -17,18 +17,18 @@
                                 <div class="col-md-8">
                                     <a href="{{ route('articles.show', $article->id) }}"><h2>{{ $article->title }}</h2></a>
                                     <p>
-                                        <b>Author:</b> {{ $article->author->name }}
+                                        <b>작성자:</b> {{ $article->author->name }}
                                     </p>
                                     <p>
-                                        <b>Categories:</b>
+                                        <b>카테고리:</b>
                                         {!! $article->categories_links !!}
                                     </p>
                                     <p>
-                                        <b>Tags:</b>
+                                        <b>태:</b>
                                         {!! $article->tags_links !!}
                                     </p>
                                     <p>{{ substr($article->article_text, 0, 200) }}...
-                                        <a href="{{ route('articles.show', $article->id) }}">Read full article</a></p>
+                                        <a href="{{ route('articles.show', $article->id) }}">더보기</a></p>
                                 </div>
                             </div>
                             <hr />
