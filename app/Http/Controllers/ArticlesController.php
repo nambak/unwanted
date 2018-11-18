@@ -22,12 +22,19 @@ class ArticlesController extends Controller
 
     public function create()
     {
+        if (! auth()->check()) {
+            abort(401, 'Unauthorized');
+        }
+
         $categories = Category::orderBy('name')->get();
         return view('articles.create', compact('categories'));
     }
 
     public function store(StoreArticleRequest $request)
     {
+        if (! auth()->check()) {
+            abort(401, 'Unauthorized');
+        }
         $article = Article::create($request->all() + ['user_id' => auth()->id()]);
 
         if (isset($request->categories)) {

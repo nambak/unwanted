@@ -45,7 +45,7 @@
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                     <label class="form-check-label" for="remember">
-                                        아이디 저
+                                        아이디 저장
                                     </label>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                 </button>
 
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    비밀번호 찾가
+                                    비밀번호 찾기
                                 </a>
                             </div>
                         </div>

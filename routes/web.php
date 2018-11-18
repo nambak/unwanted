@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::resource('articles', 'ArticlesController');
+Route::resource('categories', 'CategoriesController');
 
 Auth::routes();
 

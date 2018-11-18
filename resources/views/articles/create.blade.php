@@ -42,11 +42,9 @@
                             <input type="text" name="tags" class="form-control" />
                             <br />
 
-                            이미:
+                            이미지:
                             <br />
-                            <input type="file" name="main_image" />
-                            <br /><br />
-
+                            <input type="file" name="main_image" class="form-control-file mb-3">
                             <input type="submit" value=" 저장 " class="btn btn-primary" />
 
                         </form>
