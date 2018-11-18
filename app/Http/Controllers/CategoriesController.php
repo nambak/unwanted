@@ -35,4 +35,13 @@ class CategoriesController extends Controller
 
         return redirect('/categories');
     }
+
+    public function destroy(Category $category)
+    {
+        if (! auth()->check()) {
+            abort(401, 'Unauthorized');
+        }
+
+        return $category->delete() ? 'success' : response('error', 500);
+    }
 }
