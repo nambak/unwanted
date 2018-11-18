@@ -22,4 +22,17 @@ class CategoriesController extends Controller
 
         return view('categories.create');
     }
+
+    public function store(Request $request)
+    {
+        if (! auth()->check()) {
+            abort(401, 'Unauthorized');
+        }
+
+        $category = new Category;
+        $category->name = $request->name;
+        $category->save();
+
+        return redirect('/categories');
+    }
 }

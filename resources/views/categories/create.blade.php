@@ -21,7 +21,7 @@
                             @csrf
 
                             카테고리 이름:
-                            <input type="text" name="category" class="form-control mb-3" value="{{ old('title') }}">
+                            <input type="text" name="name" class="form-control mb-3" value="{{ old('name') }}">
 
                             <input type="submit" value="저장" class="btn btn-primary">
                         </form>
