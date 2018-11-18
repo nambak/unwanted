@@ -24,7 +24,7 @@
                                         {!! $article->categories_links !!}
                                     </p>
                                     <p>
-                                        <b>태:</b>
+                                        <b>태그:</b>
                                         {!! $article->tags_links !!}
                                     </p>
                                     <p>{{ substr($article->article_text, 0, 200) }}...
