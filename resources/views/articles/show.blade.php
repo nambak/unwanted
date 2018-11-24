@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header"><h1>{{ $article->title }}</h1></div>
 
                     <div class="card-body">
@@ -29,6 +29,9 @@
 
                     </div>
                 </div>
+                @if(auth()->check())
+                    <a class="btn btn-info text-white" href="{{ route('articles.edit', ['article' => $article->id]) }}">수정</a>
+                @endif
             </div>
             <div class="col-md-4">
                 @include('articles.sidebar')

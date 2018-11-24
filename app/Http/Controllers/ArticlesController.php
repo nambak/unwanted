@@ -63,4 +63,20 @@ class ArticlesController extends Controller
         $all_tags = Tag::all();
         return view('articles.show', compact('article', 'all_categories', 'all_tags'));
     }
+
+    public function edit(Article $article)
+    {
+        if (! auth()->check()) {
+            abort(401, 'Unauthorized');
+        }
+
+        $categories = Category::all();
+
+        return view('articles.edit', compact('article', 'categories', 'tags'));
+    }
+
+    public function update()
+    {
+
+    }
 }
