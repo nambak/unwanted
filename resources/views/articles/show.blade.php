@@ -29,9 +29,9 @@
 
                     </div>
                 </div>
-                @if(auth()->check())
+                @auth
                     <a class="btn btn-info text-white" href="{{ route('articles.edit', ['article' => $article->id]) }}">수정</a>
-                @endif
+                @endauth
             </div>
             <div class="col-md-4">
                 @include('articles.sidebar')

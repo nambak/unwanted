@@ -27,16 +27,23 @@
                             카테고리:
                             <br />
                             @foreach ($categories as $category)
-                                <input type="checkbox" name="categories[]" value="{{ $category->id }}" /> {{ $category->name }}
+                                <input type="checkbox"
+                                       name="categories[]"
+                                       value="{{ $category->id }}"
+                                       @if (in_array($category->name, $selectedCategories))
+                                            checked="checked"
+                                       @endif
+                                       > {{ $category->name }}
                                 <br />
                             @endforeach
                             <br />
 
                             태그 (쉼표로 구분):
-                            <input type="text" name="tags" class="form-control" value="">
+                            <input type="text" name="tags" class="form-control" value="{{ $tags }}">
                             <br />
 
                             이미지:
+                            <img src="{{ $article->getFirstMediaUrl('main_images', 'main') }}">
                             <br />
                             <input type="file" name="main_image" class="form-control-file mb-3">
                             <input type="submit" value=" 저장 " class="btn btn-primary" />

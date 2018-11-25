@@ -7,6 +7,8 @@ use App\Article;
 use App\Category;
 use App\Tag;
 use App\Http\Requests\StoreArticleRequest;
+use Illuminate\Support\Facades\Auth;
+use Spatie\MediaLibrary\Models\Media;
 
 
 class ArticlesController extends Controller
@@ -22,7 +24,7 @@ class ArticlesController extends Controller
 
     public function create()
     {
-        if (! auth()->check()) {
+        if (! Auth::check()) {
             abort(401, 'Unauthorized');
         }
 
@@ -32,9 +34,6 @@ class ArticlesController extends Controller
 
     public function store(StoreArticleRequest $request)
     {
-        if (! auth()->check()) {
-            abort(401, 'Unauthorized');
-        }
         $article = Article::create($request->all() + ['user_id' => auth()->id()]);
 
         if (isset($request->categories)) {
@@ -66,17 +65,44 @@ class ArticlesController extends Controller
 
     public function edit(Article $article)
     {
-        if (! auth()->check()) {
+        if (! Auth::check()) {
             abort(401, 'Unauthorized');
         }
 
         $categories = Category::all();
+        $selectedCategories = $article->categories->pluck('name')->toArray();
+        $tags = implode(',', $article->tags->pluck('name')->toArray());
 
-        return view('articles.edit', compact('article', 'categories', 'tags'));
+        return view('articles.edit', compact('article', 'categories', 'tags', 'selectedCategories'));
     }
 
-    public function update()
+    public function update(Article $article, StoreArticleRequest $request)
     {
+        $article->title = $request->title;
+        $article->article_text = $request->article_text;
+        $article->save();
 
+        if (isset($request->categories)) {
+            $article->with(['categories'])->find($article->id)->categories()->sync($request->categories);
+        }
+
+        if ($request->tags != '') {
+            $tags = explode(',', $request->tags);
+            foreach ($tags as $tag_name) {
+                $tag = Tag::firstOrCreate(['name' => trim($tag_name)]);
+                $tagsIds[] = $tag['id'];
+            }
+            $article->with(['tags'])->find($article->id)->tags()->sync($tagsIds);
+        }
+
+        if ($request->hasFile('main_image')) {
+            $media = Media::where('model_id', $article->id)->first();
+
+            $article->deleteMedia($media->id);
+
+            $article->addMediaFromRequest('main_image')->toMediaCollection('main_images');
+        }
+
+        return redirect()->route('articles.show', ['article' => $article->id]);
     }
 }
