@@ -105,4 +105,15 @@ class ArticlesController extends Controller
 
         return redirect()->route('articles.show', ['article' => $article->id]);
     }
+
+    public function destroy(Article $article)
+    {
+        if (! Auth::check()) {
+            abort(401, 'Unauthorized');
+        }
+
+        $article->delete();
+
+        return redirect()->route('articles.index');
+    }
 }

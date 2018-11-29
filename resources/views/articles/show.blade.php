@@ -31,6 +31,12 @@
                 </div>
                 @auth
                     <a class="btn btn-info text-white" href="{{ route('articles.edit', ['article' => $article->id]) }}">수정</a>
+                    <form method="post" action="/articles/{{ $article->id }}" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="btn btn-danger text-white">삭제</button>
+                    </form>
                 @endauth
             </div>
             <div class="col-md-4">
