@@ -64,7 +64,7 @@ class Article extends Model implements HasMedia
                 return $query->where('title', 'like', '%'.request('query').'%');
             })
             ->orderBy('id', 'desc')
-            ->paginate(3);
+            ->paginate(5);
     }
 
     public function registerMediaConversions(Media $media = null)
