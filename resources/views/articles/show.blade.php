@@ -10,7 +10,7 @@
                     <div class="card-body">
 
                         <p>
-                            <img src="{{ $article->getFirstMediaUrl('main_images', 'main') }}" />
+                            <img src="{{ $article->getFirstMediaUrl('main_images', 'main') }}"/>
                         </p>
 
                         <p>
@@ -29,14 +29,18 @@
 
                     </div>
                 </div>
+                <button class="btn btn-primary" id="showList">목록보기</button>
                 @auth
-                    <a class="btn btn-info text-white" href="{{ route('articles.edit', ['article' => $article->id]) }}">수정</a>
-                    <form method="post" action="/articles/{{ $article->id }}" style="display: inline;">
-                        @csrf
-                        @method('DELETE')
+                    <div class="float-right">
+                        <a class="btn btn-info text-white"
+                           href="{{ route('articles.edit', ['article' => $article->id]) }}">수정</a>
+                        <form method="post" action="/articles/{{ $article->id }}" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
 
-                        <button type="submit" class="btn btn-danger text-white">삭제</button>
-                    </form>
+                            <button type="submit" class="btn btn-danger text-white">삭제</button>
+                        </form>
+                    </div>
                 @endauth
             </div>
             <div class="col-md-4">
@@ -44,4 +48,14 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#showList').on('click', function () {
+                history.back();
+            });
+        });
+    </script>
 @endsection
