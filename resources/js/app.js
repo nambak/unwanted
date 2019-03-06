@@ -1,4 +1,4 @@
-
+require('bulma');
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -17,4 +17,11 @@ window.Vue = require('vue');
 
 const app = new Vue({
     el: '#app'
+});
+
+$(document).ready(function() {
+    $(".navbar-burger").click(function() {
+        $(".navbar-burger").toggleClass("is-active");
+        $(".navbar-menu").toggleClass("is-active");
+    });
 });
