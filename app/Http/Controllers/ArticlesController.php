@@ -15,16 +15,20 @@ class ArticlesController extends Controller
 {
     public function index()
     {
-        $articles = Article::getList();
+        $articles       = Article::getList();
         $all_categories = Category::all();
-        $all_tags = Tag::all();
+        $all_tags       = Tag::all();
+        $recentArticles = Article::getRecent();
 
-        return view('articles.index', compact('articles', 'all_categories', 'all_tags'));
+        return view(
+            'articles.index',
+            compact('articles', 'all_categories', 'all_tags', 'recentArticles')
+        );
     }
 
     public function create()
     {
-        if (! Auth::check()) {
+        if (!Auth::check()) {
             abort(401, 'Unauthorized');
         }
 
@@ -65,7 +69,7 @@ class ArticlesController extends Controller
 
     public function edit(Article $article)
     {
-        if (! Auth::check()) {
+        if (!Auth::check()) {
             abort(401, 'Unauthorized');
         }
 
@@ -108,7 +112,7 @@ class ArticlesController extends Controller
 
     public function destroy(Article $article)
     {
-        if (! Auth::check()) {
+        if (!Auth::check()) {
             abort(401, 'Unauthorized');
         }
 

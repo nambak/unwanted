@@ -107,6 +107,11 @@
                 @yield('content')
         </div>
     </section>
+    <footer class="footer">
+        <div class="content has-text-centerd">
+            <p><i class="fas fa-envelope"></i></p>
+        </div>
+    </footer>
 </div>
 @yield('script')
 </body>

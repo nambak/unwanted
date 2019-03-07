@@ -76,4 +76,10 @@ class Article extends Model implements HasMedia
             ->width(600)
             ->height(200);
     }
+
+    public static function getRecent()
+    {
+        return static::select('id', 'title', 'created_at')
+            ->latest()->take(3)->get();
+    }
 }

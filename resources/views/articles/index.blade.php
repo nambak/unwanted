@@ -8,8 +8,11 @@
                     <a href="{{ route('articles.show', $article->id) }}">
                         <span class="title is-2">{{ $article->title }}</span>
                     </a>
-                    {{--<img src="{{ $article->getFirstMediaUrl('main_images', 'thumb') }}" />--}}
                     <p class="subtitle is-6 has-text-grey-lighter">{{ $article->created_at->format('Y-m-d') }}</p>
+
+                    <img src="https://placeimg.com/1280/480/tech?id={{$article->id}}">
+                    {{--<img src="{{ $article->getFirstMediaUrl('main_images', 'thumb') }}" />--}}
+
                     <p class="text">
                         @if (strlen($article->article_text) >= 2000)
                             {!! str_replace("\r","\n", substr($article->article_text, 0, 2000)) !!}...
@@ -27,7 +30,6 @@
             @endforelse
         </div>
         <div class="column is-one-fifths">
-            최근글
 
             @include('articles.sidebar')
 
