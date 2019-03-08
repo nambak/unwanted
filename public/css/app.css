@@ -1,8 +1,1 @@
-article {
-  margin-bottom: 70px;
-}
-
-article > .text {
-  margin-bottom: 25px;
-}
-
+nav{box-shadow:0 -1px 10px 1px #d3d3d3}article{margin-bottom:70px}article>.text{margin-bottom:25px}article>img{margin-bottom:10px}section.sidebar>.title{margin-bottom:12px}
