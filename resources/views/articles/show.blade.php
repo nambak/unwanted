@@ -1,51 +1,52 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card mb-3">
-                    <div class="card-header"><h1>{{ $article->title }}</h1></div>
+    <div class="columns">
+        <div class="column is-four-fifths">
+            <article>
+                <h1 class="title is-2">{{ $article->title }}</h1>
+                <p class="subtitle is-6 has-text-grey-lighter">
+                    {{$article->created_at->format('Y-m-d')}}
+                </p>
 
-                    <div class="card-body">
+                @if ($article->getFirstMediaUrl('main_images'))
+                <p>
+                    <img src="{{ $article->getFirstMediaUrl('main_images') }}"/>
+                </p>
+                @endif
 
-                        <p>
-                            <img src="{{ $article->getFirstMediaUrl('main_images', 'main') }}"/>
-                        </p>
+                <p class="text">
+                    {!! nl2br($article->article_text) !!}
+                </p>
 
-                        <p>
-                            <b>작성자:</b> {{ $article->author->name }}
-                        </p>
-                        <p>
-                            <b>카테고리:</b>
-                            {!! $article->categories_links !!}
-                        </p>
-                        <p>
-                            <b>태그:</b>
-                            {!! $article->tags_links !!}
-                        </p>
+                <p class="content is-small">
+                    @if ($article->catorgories_link)
+                        <span><b>Category </b>{!! $article->categories_links !!}</span>
+                    @endif
 
-                        <p>{!! nl2br($article->article_text) !!}</p>
+                    @if ($article->tags_links !== 'none')
+                        <span><b>Tag </b>{!! $article->tags_links !!}</span>
+                    @endif
+                </p>
+            </article>
 
-                    </div>
+            @auth
+                <div class="has-text-right">
+                    <a class="button is-small" href="{{ route('articles.edit', ['article' => $article->id]) }}">수정</a>
+                    <form method="post" action="/articles/{{ $article->id }}" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+
+                        <button class="button is-small" type="submit">삭제</button>
+                    </form>
                 </div>
-                <button class="btn btn-primary" id="showList">목록보기</button>
-                @auth
-                    <div class="float-right">
-                        <a class="btn btn-info text-white"
-                           href="{{ route('articles.edit', ['article' => $article->id]) }}">수정</a>
-                        <form method="post" action="/articles/{{ $article->id }}" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
+            @endauth
 
-                            <button type="submit" class="btn btn-danger text-white">삭제</button>
-                        </form>
-                    </div>
-                @endauth
-            </div>
-            <div class="col-md-4">
-                @include('articles.sidebar')
-            </div>
+        </div>
+        <div class="column is-one-fifths">
+
+            @include('articles.sidebar')
+
         </div>
     </div>
 @endsection

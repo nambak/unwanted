@@ -64,7 +64,12 @@ class ArticlesController extends Controller
         $article->load(['categories', 'tags', 'author']);
         $all_categories = Category::all();
         $all_tags = Tag::all();
-        return view('articles.show', compact('article', 'all_categories', 'all_tags'));
+        $recentArticles = Article::getRecent();
+
+        return view(
+            'articles.show',
+            compact('article', 'all_categories', 'all_tags', 'recentArticles')
+        );
     }
 
     public function edit(Article $article)
