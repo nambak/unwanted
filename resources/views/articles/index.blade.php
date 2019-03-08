@@ -10,8 +10,9 @@
                     </a>
                     <p class="subtitle is-6 has-text-grey-lighter">{{ $article->created_at->format('Y-m-d') }}</p>
 
-                    <img src="https://placeimg.com/1280/480/tech?id={{$article->id}}">
-                    {{--<img src="{{ $article->getFirstMediaUrl('main_images', 'thumb') }}" />--}}
+                    @if ($article->getFirstMediaUrl('main_images'))
+                        <img src="{{ $article->getFirstMediaUrl('main_images') }}" />
+                    @endif
 
                     <p class="text">
                         @if (strlen($article->article_text) >= 2000)
@@ -21,8 +22,13 @@
                         @endif
                     </p>
                     <p class="content is-small">
-                        <span><b>Category </b>{!! $article->categories_links !!}</span>
-                        <span><b>Tag </b>{!! $article->tags_links !!}</span>
+                        @if ($article->catorgories_link)
+                            <span><b>Category </b>{!! $article->categories_links !!}</span>
+                        @endif
+
+                        @if ($article->tags_links !== 'none')
+                            <span><b>Tag </b>{!! $article->tags_links !!}</span>
+                        @endif
                     </p>
                 </article>
             @empty

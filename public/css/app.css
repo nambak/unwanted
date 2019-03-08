@@ -6,6 +6,10 @@ article > .text {
   margin-bottom: 25px;
 }
 
+article > img {
+  margin-bottom: 10px;
+}
+
 section.sidebar > .title {
   margin-bottom: 12px;
 }

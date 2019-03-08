@@ -108,8 +108,13 @@
         </div>
     </section>
     <footer class="footer">
-        <div class="content has-text-centerd">
-            <p><i class="fas fa-envelope"></i></p>
+        <div class="has-text-centered">
+            <p>
+                <a href="mailto:nambak80@gmail.com"><i class="fas fa-lg fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/nambak80/"><i class="fab fa-lg fa-linkedin"></i></a>
+                <a href="https://medium.com/@nambak1980"><i class="fab fa-lg fa-medium"></i></a>
+            </p>
+            <p class="content is-small">Since 2019</p>
         </div>
     </footer>
 </div>
