@@ -25,3 +25,15 @@ section.sidebar > .title {
     margin-top: 20px;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+section.section {
+    min-height: 100vh;
+}
+
+.footer {
+    padding: 3rem 1.5rem;
+}
