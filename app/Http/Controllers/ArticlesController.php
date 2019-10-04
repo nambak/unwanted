@@ -41,7 +41,7 @@ class ArticlesController extends Controller
         $article = Article::create($request->all() + ['user_id' => auth()->id()]);
 
         if (isset($request->categories)) {
-            $article->categories()->attach($request->categories);
+            $article->categories()->attach(json_decode($request->categories));
         }
 
         if ($request->tags != '') {
@@ -56,7 +56,7 @@ class ArticlesController extends Controller
             $article->addMediaFromRequest('main_image')->toMediaCollection('main_images');
         }
 
-        return redirect()->route('articles.index');
+        // return redirect()->route('articles.index');
     }
 
     public function show(Article $article)
