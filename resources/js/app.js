@@ -14,7 +14,9 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('article-form', require('./components/ArticleForm').default   );
+Vue.component('article-form', require('./components/ArticleForm').default);
+Vue.component('article-edit', require('./components/ArticleEdit').default);
+
 
 const app = new Vue({
     el: '#app'

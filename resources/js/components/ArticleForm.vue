@@ -33,10 +33,10 @@
         </div>
 
         <div class="field">
-            <label for="main_image" class="label">이미지:</label>
+            <label class="label">이미지:</label>
             <div class="file has-name">
                 <label class="file-label">
-                    <input type="file" id="main_image" name="main_image" class="file-input" @change="handleImageUpload">
+                    <input type="file" class="file-input" @change="handleImageUpload">
                     <span class="file-cta">
                         <span class="file-icon">
                             <i class="fas fa-upload"></i>
@@ -45,7 +45,7 @@
                             파일 선택
                         </span>
                     </span>
-                    <span class="file-name">선택된 파일 없음</span>
+                    <span class="file-name">{{ imageName ? imageName : '선택된 파일 없음' }}</span>
                 </label>
             </div>
         </div>
@@ -67,6 +67,7 @@
         data() {
             return {
                 image: '',
+                imageName: '',
                 title: '',
                 articleText: this.oldArticleText,
                 selectedCategories: [],
@@ -77,6 +78,7 @@
         methods: {
             handleImageUpload(event) {
                 this.image = event.target.files[0];
+                this.imageName = event.target.files[0].name;
             },
 
             store() {
