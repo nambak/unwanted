@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,9 +19,9 @@ Route::get('/', function () {
     return redirect()->route('articles.index');
 });
 
-Route::resource('articles', 'ArticlesController');
-Route::resource('categories', 'CategoriesController');
+Route::resource('articles', ArticlesController::class);
+Route::resource('categories', CategoriesController::class);
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
