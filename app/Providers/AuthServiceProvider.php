@@ -25,8 +25,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-
-        // Laravel Passport 12에서는 routes() 메서드가 제거됨
-        // 대신 RouteServiceProvider에서 라우트를 직접 등록해야 함
     }
 }
