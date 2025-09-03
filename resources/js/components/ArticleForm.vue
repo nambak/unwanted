@@ -1,100 +1,105 @@
 <template>
-    <form>
-        <div class="field">
-            <label class="label">제목:</label>
-            <div class="control">
-                <input type="text" class="input" v-model="title"/>
-            </div>
-        </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>새 글 쓰기</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Form>
+          <FormField name="title">
+            <FormItem>
+              <FormLabel>제목</FormLabel>
+              <FormControl>
+                <Input type="text" v-model="title" class="mb-4"/>
+              </FormControl>
+              <FormDescription />
+              <FormMessage />
+            </FormItem>
+          </FormField>
+          <FormField name="article_text">
+            <FormItem>
+              <FormLabel>내용</FormLabel>
+              <FormControl>
+                <Textarea v-model="articleText" class="mb-4"></Textarea>
+              </FormControl>
+            </FormItem>
+          </FormField>
+          <FormField name="categories">
+            <FormItem>
+              <FormLabel>카테고리</FormLabel>
+              <FormControl v-if="categories.length > 0">
+                <div v-for="category in categories">
+                  <Checkbox :id="category.id" :value="category.id" v-model="selectedCategories"/>
+                  <Label :for="category.id">{{ category.name }}</Label>
+                </div>
+              </FormControl>
+              <FormControl v-else>
+                <Label class="mb-4">등록된 카테고리가 없습니다.</Label>
+              </FormControl>
+            </FormItem>
+          </FormField>
+          <FormField name="tags">
+            <FormItem>
+              <FormLabel>태그</FormLabel>
+              <FormControl>
+                <Input type="text" v-model="tags" class="mb-4"/>
+              </FormControl>
+            </FormItem>
+          </FormField>
+          <FormField name="image">
+            <FormItem>
+              <FormLabel>이미지</FormLabel>
+              <FormControl>
+                <Input type="file" class="hidden" @change="handleImageUpload"/>
+                <Button type="button" class="w-25">
+                  <Upload /> 파일 선택
+                </Button>
+                <span class="mb-4">{{ imageName ? imageName : '선택된 파일 없음' }}</span>
+              </FormControl>
+            </FormItem>
+          </FormField>
+          <Button type="submit" class="w-full" @click="store">저장</Button>
+        </Form>
+      </CardContent>
+    </Card>
 
-        <div class="field">
-            <label class="label">내용:</label>
-            <div class="control">
-                <vue-editor v-model="articleText"></vue-editor>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">카테고리:</label>
-            <div class="control">
-                <label class="checkbox" v-for="category in categories">
-                    <input type="checkbox" :value="category.id" v-model="selectedCategories"/>
-                    {{ category.name }}
-                </label>
-            </div>
-        </div>
-
-        <div class="field">
-            <label>태그:</label>
-            <div class="control">
-                <input type="text" class="input" v-model="tags"/>
-            </div>
-            <p class="help">쉼표로 구분</p>
-        </div>
-
-        <div class="field">
-            <label class="label">이미지:</label>
-            <div class="file has-name">
-                <label class="file-label">
-                    <input type="file" class="file-input" @change="handleImageUpload">
-                    <span class="file-cta">
-                        <span class="file-icon">
-                            <i class="fas fa-upload"></i>
-                        </span>
-                        <span class="file-label">
-                            파일 선택
-                        </span>
-                    </span>
-                    <span class="file-name">{{ imageName ? imageName : '선택된 파일 없음' }}</span>
-                </label>
-            </div>
-        </div>
-        <button type="button" class="button is-primary" @click="store">저장</button>
-    </form>
 </template>
-<script>
-    import {VueEditor} from "vue2-editor";
+<script setup>
+    import { ref, defineProps } from 'vue'
+    import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card/index.js";
+    import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
+    import { Input } from "@/components/ui/input"
+    import { Textarea } from "@/components/ui/textarea"
+    import { Checkbox } from "@/components/ui/checkbox"
+    import { Label } from "@/components/ui/label"
+    import { Button } from "@/components/ui/button"
+    import { Upload } from "lucide-vue-next";
 
-    export default {
-        name: "ArticleForm",
+    const props = defineProps(['categories'])
 
-        components: {
-            VueEditor
-        },
+    const image = ref('')
+    const imageName = ref('')
+    const title = ref('')
+    const articleText = ref('')
+    const selectedCategories = ref([])
+    const tags = ref('')
 
-        props: ['categories'],
+    const handleImageUpload = (event) => {
+        image.value = event.target.files[0]
+        imageName.value = event.target.files[0].name
+    }
 
-        data() {
-            return {
-                image: '',
-                imageName: '',
-                title: '',
-                articleText: this.oldArticleText,
-                selectedCategories: [],
-                tags: '',
-            }
-        },
+    const store = () => {
+        let formData = new FormData()
 
-        methods: {
-            handleImageUpload(event) {
-                this.image = event.target.files[0];
-                this.imageName = event.target.files[0].name;
-            },
+        formData.append('title', title.value)
+        formData.append('article_text', articleText.value)
+        formData.append('categories', JSON.stringify(selectedCategories.value))
+        formData.append('tags', tags.value)
+        formData.append('main_image', image.value)
 
-            store() {
-                let formData = new FormData();
-
-                formData.append('title', this.title);
-                formData.append('article_text', this.articleText);
-                formData.append('categories', JSON.stringify(this.selectedCategories));
-                formData.append('tags', this.tags);
-                formData.append('main_image', this.image);
-
-                axios.post('/articles', formData, { headers: {'Content-Type': 'multipart/form-data'}})
-                    .then(response => {
-                        location.href = '/articles';
-                    })
-            }
-        }
+        axios.post('/articles', formData, { headers: {'Content-Type': 'multipart/form-data'}})
+            .then(() => {
+                location.href = '/articles'
+            })
     }
 </script>

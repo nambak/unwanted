@@ -18,3 +18,4 @@ yarn-error.log
 /.mcp.json
 /CLAUDE.md
 /.claude/
+/public/build/

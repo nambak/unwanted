@@ -1,41 +1,33 @@
-<script>
+<script setup>
+    import { ref, defineProps } from 'vue'
     import ArticleForm from "./ArticleForm";
 
-    export default {
-        name: "ArticleEdit",
+    const props = defineProps(['article'])
 
-        extends: ArticleForm,
+    const title = ref(props.article.title)
+    const articleText = ref(props.article.article_text)
+    const selectedCategories = ref(props.article.categories.map(category => category.id))
+    const tags = ref(props.article.tags.map(tag => tag.name).join(', '))
+    const image = ref('')
 
-        props: ['article'],
+    const store = () => {
+        let formData = new FormData()
 
-        data() {
-            return {
-                title: this.article.title,
-                articleText: this.article.article_text,
-                selectedCategories: this.article.categories.map(category => category.id),
-                tags: this.article.tags.map(tag => tag.name)
-            }
-        },
+        formData.append('title', title.value)
+        formData.append('article_text', articleText.value)
+        formData.append('categories', JSON.stringify(selectedCategories.value))
+        formData.append('tags', tags.value)
 
-        store() {
-            let formData = new FormData();
-
-            formData.append('title', this.title);
-            formData.append('article_text', this.articleText);
-            formData.append('categories', JSON.stringify(this.selectedCategories));
-            formData.append('tags', this.tags);
-
-            if (this.image) {
-                formData.append('main_image', this.image);
-            }
-
-            let uri = '/articles/' + this.article.id;
-
-            axios.patch(uri, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-                .then(response => {
-                    location.href = uri;
-                })
+        if (image.value) {
+            formData.append('main_image', image.value)
         }
+
+        let uri = '/articles/' + props.article.id
+
+        axios.patch(uri, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+            .then(() => {
+                location.href = uri
+            })
     }
 </script>
 

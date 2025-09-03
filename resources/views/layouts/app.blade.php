@@ -10,35 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
-    <!-- Google AdSense -->
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-3760455502657641",
-            enable_page_level_ads: true
-        });
-    </script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129659033-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-129659033-1');
-    </script>
-
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-NQ4D5PH');</script>
-    <!-- End Google Tag Manager -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.min.css" type="text/css">
@@ -46,75 +18,111 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-
-    <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
-    @yield('style')
-
 </head>
 <body>
 <div id="app">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="{{ url('/') }}">
-                unwanted
-            </a>
+    <nav class="bg-white shadow-lg" role="navigation" aria-label="main navigation">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a class="text-xl font-bold text-gray-800 hover:text-gray-600" href="{{ url('/') }}">
+                        unwanted
+                    </a>
+                </div>
 
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-        <div id="navbarMenu" class="navbar-menu">
-            <div class="navbar-end">
-                <div class="navbar-item">
+                <!-- Mobile menu button -->
+                <button class="md:hidden navbar-burger flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-800 hover:border-gray-300" data-target="navbarMenu">
+                    <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+                    </svg>
+                </button>
+
+                <!-- Desktop menu -->
+                <div class="hidden md:flex md:items-center md:space-x-4">
                     <!-- Authentication Links -->
                     @guest
-                    <a href="{{ route('login') }}">
+                    <a href="{{ route('login') }}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                         Log in
                     </a>
                     @else
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">{{ Auth::user()->name }}</a>
+                    <div class="relative group">
+                        <button class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                            {{ Auth::user()->name }}
+                            <svg class="ml-1 h-4 w-4 inline" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
 
-                        <div class="navbar-dropdown is-boxed is-right">
-                            <a class="navbar-item" href="{{ route('articles.create') }}" >
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+                            <div class="py-1">
+                                <a href="{{ route('articles.create') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    글쓰기
+                                </a>
+                                <a href="{{ route('categories.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    카테고리 관리
+                                </a>
+                                <a href="{{ route('logout') }}" 
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    {{ __('Logout') }}
+                                </a>
+                            </div>
+                        </div>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                            @csrf
+                        </form>
+                    </div>
+                    @endguest
+                </div>
+
+                <!-- Mobile menu -->
+                <div id="navbarMenu" class="hidden md:hidden absolute top-16 left-0 right-0 bg-white shadow-lg">
+                    <div class="px-2 pt-2 pb-3 space-y-1">
+                        @guest
+                        <a href="{{ route('login') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+                            Log in
+                        </a>
+                        @else
+                        <div class="space-y-1">
+                            <div class="px-3 py-2 text-base font-medium text-gray-900">{{ Auth::user()->name }}</div>
+                            <a href="{{ route('articles.create') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
                                 글쓰기
                             </a>
-                            <a class="navbar-item" href="{{ route('categories.index') }}">
+                            <a href="{{ route('categories.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
                                 카테고리 관리
                             </a>
-                            <a class="navbar-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a href="{{ route('logout') }}" 
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                               class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
                                 {{ __('Logout') }}
                             </a>
                         </div>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-
+                        @endguest
                     </div>
-                    @endguest
                 </div>
             </div>
         </div>
     </nav>
-    <section class="section">
-        <div class="container">
+    <section class="min-h-screen py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 @yield('content')
         </div>
     </section>
-    <footer class="footer">
-        <div class="has-text-centered">
-            <p>
-                <a href="mailto:nambak80@gmail.com"><i class="fas fa-lg fa-envelope"></i></a>
-                <a href="https://www.linkedin.com/in/nambak80/"><i class="fab fa-lg fa-linkedin"></i></a>
-                <a href="https://medium.com/@nambak1980"><i class="fab fa-lg fa-medium"></i></a>
-            </p>
-            <p class="content is-small">Since 2019</p>
+    <footer class="bg-gray-50 py-12">
+        <div class="text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="mailto:nambak80@gmail.com" class="text-gray-600 hover:text-gray-900">
+                    <i class="fas fa-lg fa-envelope"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/nambak80/" class="text-gray-600 hover:text-gray-900">
+                    <i class="fab fa-lg fa-linkedin"></i>
+                </a>
+                <a href="https://medium.com/@nambak1980" class="text-gray-600 hover:text-gray-900">
+                    <i class="fab fa-lg fa-medium"></i>
+                </a>
+            </div>
+            <p class="text-sm text-gray-500">Since 2019</p>
         </div>
     </footer>
 </div>
