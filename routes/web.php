@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::resource('articles', ArticlesController::class);
-Route::resource('categories', CategoriesController::class);
+Route::resource('categories', CategoriesController::class)->middleware('auth');
 
 Auth::routes();
 

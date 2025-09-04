@@ -12,8 +12,6 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.min.css" type="text/css">
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
@@ -21,6 +19,7 @@
 </head>
 <body>
 <div id="app">
+    <toaster position="top-center"></toaster>
     <nav class="bg-white shadow-lg" role="navigation" aria-label="main navigation">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">

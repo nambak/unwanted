@@ -18,10 +18,13 @@ const app = createApp({});
 import ArticleForm from './components/ArticleForm.vue';
 import CategoryForm from './components/CategoryForm.vue';
 import CategoryIndex from './components/CategoryIndex.vue';
+import { Toaster } from "@/components/ui/sonner"
+import 'vue-sonner/style.css'
 
 app.component('article-form', ArticleForm);
 app.component('category-form', CategoryForm);
 app.component('category-index', CategoryIndex);
+app.component('toaster', Toaster);
 
 /**
  * The following block of code may be used to automatically register your
