@@ -19,7 +19,12 @@
             <FormItem>
               <FormLabel>내용</FormLabel>
               <FormControl>
-                <Textarea v-model="articleText" class="mb-4"></Textarea>
+                <VueTailwindEditor
+                    width="100%"
+                    placeholder="글 내용을 작성해 주세요"
+                    class="border rounded-md mb-4"
+                    @update="handleEditorUpdate"
+                />
               </FormControl>
             </FormItem>
           </FormField>
@@ -27,10 +32,16 @@
             <FormItem>
               <FormLabel>카테고리</FormLabel>
               <FormControl v-if="categories.length > 0">
-                <div v-for="category in categories">
-                  <Checkbox :id="category.id" :value="category.id" v-model="selectedCategories"/>
-                  <Label :for="category.id">{{ category.name }}</Label>
-                </div>
+                <Select v-model="selectedCategory">
+                  <SelectTrigger class="mb-4">
+                    <SelectValue placeholder="카테고리를 선택하세요" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem v-for="category in categories" :key="category.id" :value="category.id.toString()">
+                      {{ category.name }}
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormControl v-else>
                 <Label class="mb-4">등록된 카테고리가 없습니다.</Label>
@@ -68,38 +79,47 @@
     import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card/index.js";
     import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
     import { Input } from "@/components/ui/input"
-    import { Textarea } from "@/components/ui/textarea"
-    import { Checkbox } from "@/components/ui/checkbox"
+    import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
     import { Label } from "@/components/ui/label"
     import { Button } from "@/components/ui/button"
-    import { Upload } from "lucide-vue-next";
+    import { Upload } from "lucide-vue-next"
+
+    import { VueTailwindEditor } from 'vue-tailwind-wysiwyg-editor';
+    import 'vue-tailwind-wysiwyg-editor/dist/style.css' // need to import the style file
 
     const props = defineProps(['categories'])
 
     const image = ref('')
     const imageName = ref('')
     const title = ref('')
-    const articleText = ref('')
-    const selectedCategories = ref([])
+    const selectedCategory = ref('')
     const tags = ref('')
+    const editorContent = ref('')
+    
+    const handleEditorUpdate = (content) => {
+        editorContent.value = content
+    }
 
     const handleImageUpload = (event) => {
         image.value = event.target.files[0]
         imageName.value = event.target.files[0].name
     }
 
-    const store = () => {
-        let formData = new FormData()
+    const store = async () => {
+        try {
+            let formData = new FormData()
+            formData.append('title', title.value)
+            formData.append('article_text', editorContent.value)
+            formData.append('categories', selectedCategory.value ? JSON.stringify([parseInt(selectedCategory.value)]) : JSON.stringify([]))
+            formData.append('tags', tags.value)
+            formData.append('main_image', image.value)
 
-        formData.append('title', title.value)
-        formData.append('article_text', articleText.value)
-        formData.append('categories', JSON.stringify(selectedCategories.value))
-        formData.append('tags', tags.value)
-        formData.append('main_image', image.value)
-
-        axios.post('/articles', formData, { headers: {'Content-Type': 'multipart/form-data'}})
-            .then(() => {
-                location.href = '/articles'
-            })
+            axios.post('/articles', formData, { headers: {'Content-Type': 'multipart/form-data'}})
+                .then(() => {
+                    location.href = '/articles'
+                })
+        } catch (error) {
+            console.error('Editor save error:', error)
+        }
     }
 </script>
