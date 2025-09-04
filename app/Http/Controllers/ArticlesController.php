@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Article;
-use App\Category;
-use App\Tag;
 use App\Http\Requests\StoreArticleRequest;
+use App\Models\Article;
+use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\Models\Media;
 

@@ -1,39 +1,8 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
 // Variables
 @import 'variables';
 
-nav {
-    box-shadow: 0 -1px 10px 1px lightgrey
-}
-
-article {
-    margin-bottom: 70px;
-}
-
-article > .text {
-    margin-bottom: 25px;
-}
-
-article > img {
-    margin-bottom: 10px;
-}
-
-section.sidebar > .title {
-    margin-bottom: 12px;
-}
-
-#disqus_thread {
-    margin-top: 20px;
-}
-
-html, body {
-    height: 100%;
-    margin: 0;
-}
-
-section.section {
-    min-height: 100vh;
-}
-
-.footer {
-    padding: 3rem 1.5rem;
-}
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
