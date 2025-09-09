@@ -1,8 +1,5 @@
-// Fonts
-@import url('https://fonts.bunny.net/css?family=Nunito');
-
 // Variables
-@import 'variables';
+@use 'variables';
 
-// Bootstrap
-@import 'bootstrap/scss/bootstrap';
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
