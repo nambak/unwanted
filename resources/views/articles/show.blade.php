@@ -3,7 +3,7 @@
 @section('content')
     <div class="columns">
         <div class="column is-four-fifths">
-            <article>
+            <article class="prose prose-base">
                 <h1 class="title is-2">{{ $article->title }}</h1>
                 <p class="subtitle is-6 has-text-grey-lighter">
                     {{$article->created_at->format('Y-m-d')}}
@@ -15,9 +15,9 @@
                 </p>
                 @endif
 
-                <p class="text">
-                    {!! nl2br($article->article_text) !!}
-                </p>
+                <div class="text editor-content">
+                    {!! $article->article_text !!}
+                </div>
 
                 <p class="content is-small">
                     @if ($article->catorgories_link)

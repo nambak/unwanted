@@ -1,10 +1,65 @@
+<script setup>
+import { ref, defineProps } from 'vue'
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card/index.js";
+import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { Upload } from "lucide-vue-next"
+
+import { VueTailwindEditor } from 'vue-tailwind-wysiwyg-editor';
+import 'vue-tailwind-wysiwyg-editor/dist/style.css'
+
+const props = defineProps(['categories'])
+
+const image = ref('')
+const imageName = ref('')
+const title = ref('')
+const selectedCategory = ref('')
+const tags = ref('')
+const html = ref("")
+
+const updateHtml = (val) => {
+  html.value = val;
+};
+
+const handleImageUpload = (event) => {
+  image.value = event.target.files[0]
+  imageName.value = event.target.files[0].name
+}
+
+const store = async () => {
+  try {
+    let formData = new FormData()
+    formData.append('title', title.value)
+    formData.append('article_text', html.value)
+    formData.append('categories', selectedCategory.value ? JSON.stringify([parseInt(selectedCategory.value)]) : JSON.stringify([]))
+    formData.append('tags', tags.value)
+    formData.append('main_image', image.value)
+    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'))
+
+    axios.post('/articles', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+    })
+        .then(() => {
+          location.href = '/articles'
+        })
+  } catch (error) {
+    console.error('Editor save error:', error)
+  }
+}
+</script>
 <template>
     <Card>
       <CardHeader>
         <CardTitle>새 글 쓰기</CardTitle>
       </CardHeader>
       <CardContent>
-        <Form>
+        <div>
           <FormField name="title">
             <FormItem>
               <FormLabel>제목</FormLabel>
@@ -23,7 +78,7 @@
                     width="100%"
                     placeholder="글 내용을 작성해 주세요"
                     class="border rounded-md mb-4"
-                    @update="handleEditorUpdate"
+                    @get-html="updateHtml"
                 />
               </FormControl>
             </FormItem>
@@ -68,58 +123,8 @@
               </FormControl>
             </FormItem>
           </FormField>
-          <Button type="submit" class="w-full" @click="store">저장</Button>
-        </Form>
+          <Button type="button" class="w-full" @click="store">저장</Button>
+        </div>
       </CardContent>
     </Card>
-
 </template>
-<script setup>
-    import { ref, defineProps } from 'vue'
-    import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card/index.js";
-    import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
-    import { Input } from "@/components/ui/input"
-    import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-    import { Label } from "@/components/ui/label"
-    import { Button } from "@/components/ui/button"
-    import { Upload } from "lucide-vue-next"
-
-    import { VueTailwindEditor } from 'vue-tailwind-wysiwyg-editor';
-    import 'vue-tailwind-wysiwyg-editor/dist/style.css' // need to import the style file
-
-    const props = defineProps(['categories'])
-
-    const image = ref('')
-    const imageName = ref('')
-    const title = ref('')
-    const selectedCategory = ref('')
-    const tags = ref('')
-    const editorContent = ref('')
-    
-    const handleEditorUpdate = (content) => {
-        editorContent.value = content
-    }
-
-    const handleImageUpload = (event) => {
-        image.value = event.target.files[0]
-        imageName.value = event.target.files[0].name
-    }
-
-    const store = async () => {
-        try {
-            let formData = new FormData()
-            formData.append('title', title.value)
-            formData.append('article_text', editorContent.value)
-            formData.append('categories', selectedCategory.value ? JSON.stringify([parseInt(selectedCategory.value)]) : JSON.stringify([]))
-            formData.append('tags', tags.value)
-            formData.append('main_image', image.value)
-
-            axios.post('/articles', formData, { headers: {'Content-Type': 'multipart/form-data'}})
-                .then(() => {
-                    location.href = '/articles'
-                })
-        } catch (error) {
-            console.error('Editor save error:', error)
-        }
-    }
-</script>

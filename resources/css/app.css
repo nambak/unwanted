@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -154,102 +155,130 @@ section.section {
     }
 }
 
-/* VueTailwindEditor 스타일 수정 */
+/* VueTailwindEditor 스타일 수정 및 글 내용 표시 */
 .vue-tailwind-editor-content,
 .ProseMirror,
 .editor-content,
-[contenteditable="true"] {
+[contenteditable="true"],
+article .text.editor-content,
+article .text.editor-content p {
   @apply text-base leading-relaxed;
 }
 
 .vue-tailwind-editor-content ul,
 .ProseMirror ul,
 .editor-content ul,
-[contenteditable="true"] ul {
+[contenteditable="true"] ul,
+article .text.editor-content ul,
+article .text.editor-content * ul {
   @apply list-disc list-outside pl-6 mb-4;
 }
 
 .vue-tailwind-editor-content ol,
 .ProseMirror ol,
 .editor-content ol,
-[contenteditable="true"] ol {
+[contenteditable="true"] ol,
+article .text.editor-content ol,
+article .text.editor-content * ol {
   @apply list-decimal list-outside pl-6 mb-4;
 }
 
 .vue-tailwind-editor-content li,
 .ProseMirror li,
 .editor-content li,
-[contenteditable="true"] li {
+[contenteditable="true"] li,
+article .text.editor-content li,
+article .text.editor-content * li {
   @apply mb-1;
 }
 
 .vue-tailwind-editor-content h1,
 .ProseMirror h1,
 .editor-content h1,
-[contenteditable="true"] h1 {
+[contenteditable="true"] h1,
+article .text.editor-content h1,
+article .text.editor-content * h1 {
   @apply text-3xl font-bold mb-4;
 }
 
 .vue-tailwind-editor-content h2,
 .ProseMirror h2,
 .editor-content h2,
-[contenteditable="true"] h2 {
+[contenteditable="true"] h2,
+article .text.editor-content h2,
+article .text.editor-content * h2 {
   @apply text-2xl font-bold mb-3;
 }
 
 .vue-tailwind-editor-content h3,
 .ProseMirror h3,
 .editor-content h3,
-[contenteditable="true"] h3 {
+[contenteditable="true"] h3,
+article .text.editor-content h3,
+article .text.editor-content * h3 {
   @apply text-xl font-bold mb-2;
 }
 
 .vue-tailwind-editor-content h4,
 .ProseMirror h4,
 .editor-content h4,
-[contenteditable="true"] h4 {
+[contenteditable="true"] h4,
+article .text.editor-content h4,
+article .text.editor-content * h4 {
   @apply text-lg font-bold mb-2;
 }
 
 .vue-tailwind-editor-content h5,
 .ProseMirror h5,
 .editor-content h5,
-[contenteditable="true"] h5 {
+[contenteditable="true"] h5,
+article .text.editor-content h5,
+article .text.editor-content * h5 {
   @apply text-base font-bold mb-1;
 }
 
 .vue-tailwind-editor-content h6,
 .ProseMirror h6,
 .editor-content h6,
-[contenteditable="true"] h6 {
+[contenteditable="true"] h6,
+article .text.editor-content h6,
+article .text.editor-content * h6 {
   @apply text-sm font-bold mb-1;
 }
 
 .vue-tailwind-editor-content blockquote,
 .ProseMirror blockquote,
 .editor-content blockquote,
-[contenteditable="true"] blockquote {
+[contenteditable="true"] blockquote,
+article .text.editor-content blockquote,
+article .text.editor-content * blockquote {
   @apply border-l-4 border-gray-300 pl-4 italic mb-4;
 }
 
 .vue-tailwind-editor-content strong,
 .ProseMirror strong,
 .editor-content strong,
-[contenteditable="true"] strong {
+[contenteditable="true"] strong,
+article .text.editor-content strong,
+article .text.editor-content * strong {
   @apply font-bold;
 }
 
 .vue-tailwind-editor-content em,
 .ProseMirror em,
 .editor-content em,
-[contenteditable="true"] em {
+[contenteditable="true"] em,
+article .text.editor-content em,
+article .text.editor-content * em {
   @apply italic;
 }
 
 .vue-tailwind-editor-content u,
 .ProseMirror u,
 .editor-content u,
-[contenteditable="true"] u {
+[contenteditable="true"] u,
+article .text.editor-content u,
+article .text.editor-content * u {
   @apply underline;
 }
 
@@ -257,21 +286,24 @@ section.section {
 .vue-tailwind-editor-content ul[data-type="taskList"],
 .ProseMirror ul[data-type="taskList"],
 .editor-content ul[data-type="taskList"],
-[contenteditable="true"] ul[data-type="taskList"] {
+[contenteditable="true"] ul[data-type="taskList"],
+article .text.editor-content ul[data-type="taskList"] {
   @apply list-none pl-0 mb-4;
 }
 
 .vue-tailwind-editor-content li[data-type="taskItem"],
 .ProseMirror li[data-type="taskItem"],
 .editor-content li[data-type="taskItem"],
-[contenteditable="true"] li[data-type="taskItem"] {
+[contenteditable="true"] li[data-type="taskItem"],
+article .text.editor-content li[data-type="taskItem"] {
   @apply flex items-center mb-2;
 }
 
 .vue-tailwind-editor-content li[data-type="taskItem"] input[type="checkbox"],
 .ProseMirror li[data-type="taskItem"] input[type="checkbox"],
 .editor-content li[data-type="taskItem"] input[type="checkbox"],
-[contenteditable="true"] li[data-type="taskItem"] input[type="checkbox"] {
+[contenteditable="true"] li[data-type="taskItem"] input[type="checkbox"],
+article .text.editor-content li[data-type="taskItem"] input[type="checkbox"] {
   @apply mt-0;
 }
 
@@ -279,13 +311,15 @@ section.section {
 .vue-tailwind-editor-content li input[type="checkbox"],
 .ProseMirror li input[type="checkbox"],
 .editor-content li input[type="checkbox"],
-[contenteditable="true"] li input[type="checkbox"] {
+[contenteditable="true"] li input[type="checkbox"],
+article .text.editor-content li input[type="checkbox"] {
   @apply align-middle;
 }
 
 .vue-tailwind-editor-content li:has(input[type="checkbox"]),
 .ProseMirror li:has(input[type="checkbox"]),
 .editor-content li:has(input[type="checkbox"]),
-[contenteditable="true"] li:has(input[type="checkbox"]) {
+[contenteditable="true"] li:has(input[type="checkbox"]),
+article .text.editor-content li:has(input[type="checkbox"]) {
   @apply flex items-center mb-2;
 }
